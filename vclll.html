@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ff00d0;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .box {
+            width: 400px;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="snowfall"></canvas>
+        <div class="box">
+            <script>
+                document.write("Merrry christmas vui vẻ <3");
+            alert("bạn muốn vào?");
+            confirm("đã chắc chắn muốn vào chứ?");
+            var confirmResult = confirm("bạn có chắc muốn ấn vào tiếp:)?");
+            if (confirmResult) {
+                // xóa thành công
+                console.log("xóa thành công");
+            } else {
+                // không xóa
+                console.log("không xóa");
+            }
+            </script>
+            <img src="./cây_thông.jpg" alt="cây thông" style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 10px;">
+            <p>Merry Christmas vui vẻ! 🎄</p>
+        </div>
+    </div>
+
+    <script>
+        // Hiệu ứng tuyết rơi
+        const canvas = document.getElementById("snowfall");
+        const ctx = canvas.getContext("2d");
+
+        // Điều chỉnh kích thước canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Tạo mảng lưu các bông tuyết
+        const snowflakes = [];
+
+        class Snowflake {
+            constructor(x, y, radius, speed) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.speed = speed;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "white";
+                ctx.fill();
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) {
+                    this.y = -this.radius; // Reset vị trí khi tuyết rơi xuống hết
+                    this.x = Math.random() * canvas.width;
+                }
+                this.draw();
+            }
+        }
+
+        function createSnowflakes() {
+            for (let i = 0; i < 100; i++) {
+                const radius = Math.random() * 3 + 2;
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const speed = Math.random() * 1 + 0.5;
+                snowflakes.push(new Snowflake(x, y, radius, speed));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snowflakes.forEach((snowflake) => snowflake.update());
+            requestAnimationFrame(animate);
+        }
+
+        createSnowflakes();
+        animate();
+    </script>
+</body>
+</html>
